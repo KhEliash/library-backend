@@ -63,9 +63,15 @@ booksRoutes.get("/book/:id", async (req: Request, res: Response) => {
 // update book
 booksRoutes.put("/book/:id", async (req: Request, res: Response) => {
   try {
-    const book = await Book.findByIdAndUpdate(req.params.id, req.body, {
+    const updateData = {
+      ...req.body,
+      available: req.body.copies > 0,
+    };
+
+    const book = await Book.findByIdAndUpdate(req.params.id, updateData, {
       new: true,
     });
+
     res.status(201).json({
       success: true,
       message: "Book updated successfully",
@@ -73,16 +79,16 @@ booksRoutes.put("/book/:id", async (req: Request, res: Response) => {
     });
   } catch (error) {
     res.status(500).json({
-      success: true,
+      success: false,
       message: "Failed to update the book",
       error,
     });
   }
 });
+
 // delete book
 booksRoutes.delete("/book/:id", async (req: Request, res: Response) => {
   try {
-    console.log(req.params.id);
     const book = await Book.findByIdAndDelete(req.params.id);
     res.status(201).json({
       success: true,
