@@ -15,7 +15,6 @@ booksRoutes.post("/book", async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     if (error.code === 11000) {
-      // MongoDB duplicate key error
       res.status(400).json({ error: "A book with this title already exists" });
     } else {
       res.status(500).json({
