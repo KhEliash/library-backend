@@ -7,7 +7,7 @@ const app: Application = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "https://library-frontend-theta.vercel.app"]
   })
 );
 
